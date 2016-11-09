@@ -1,4 +1,4 @@
-# Card Games
+# Card Games [![Build Status](https://travis-ci.org/vibbix/CardGames.svg?branch=master)](https://travis-ci.org/vibbix/CardGames) [![Coverage Status](https://coveralls.io/repos/github/vibbix/CardGames/badge.svg?branch=master)](https://coveralls.io/github/vibbix/CardGames?branch=master)
 ![Card Games](https://media.giphy.com/media/xT9DPlAUKTl1GeZjC8/giphy.gif)
 
 
