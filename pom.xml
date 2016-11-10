@@ -7,6 +7,9 @@
     <groupId>edu.wit.comp2000.group25.lists</groupId>
     <artifactId>CardGames</artifactId>
     <version>0.5</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <build>
         <plugins>
             <plugin>
