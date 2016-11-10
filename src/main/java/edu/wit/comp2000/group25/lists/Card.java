@@ -28,4 +28,9 @@ public class Card {
     public CardValue getValue() {
         return value;
     }
+    public String toString(){
+        String str = "Card{'" + this.suit.getSymbol();
+        str += "':'" + this.value.toString() + "'";
+        return str;
+    }
 }
