@@ -31,6 +31,8 @@ public class Pile {
      * @param card Card to add to pile
      */
     public void enqueueCard(Card card){
+        if (card == null)
+            throw new IllegalArgumentException("Card cannot be null");
         this.cardCollection.add(card);
     }
 

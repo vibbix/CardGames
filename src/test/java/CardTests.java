@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by beznosm on 11/15/2016.
+ * Tests for the card class
  */
 public class CardTests {
     @Test
@@ -22,5 +22,47 @@ public class CardTests {
     public void getValue(){
         Card c = new Card(CardSuit.Diamonds, CardValue.Ace);
         Assert.assertEquals(CardValue.Ace, c.getValue());
+    }
+
+    @Test
+    public void assertEqualTo() {
+        Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Assert.assertEquals(c1, c2);
+    }
+
+    @Test
+    public void equalTo() {
+        Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Assert.assertEquals(true, c1.equals(c2));
+    }
+
+    @Test
+    public void notEqualTo() {
+        Card c1 = new Card(CardSuit.Clubs, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Assert.assertEquals(false, c1.equals(c2));
+    }
+
+    @Test
+    public void compareTo() {
+        Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Assert.assertEquals(0, c1.compareTo(c2));
+    }
+
+    @Test
+    public void compare() {
+        Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Diamonds, CardValue.Two);
+        Assert.assertEquals(-1, c1.compare(c1, c2));
+    }
+
+    @Test
+    public void compareEqual() {
+        Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Assert.assertEquals(0, c1.compare(c1, c2));
     }
 }
