@@ -50,6 +50,10 @@ public class Pile {
         Collections.shuffle(this.cardCollection);
     }
 
+    public void sort(){
+        Collections.sort(this.cardCollection);
+    }
+
     /**
      * Gets the cards in the pile
      * @return Number of cards in the pile
