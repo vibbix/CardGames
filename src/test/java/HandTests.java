@@ -35,4 +35,18 @@ public class HandTests {
         Hand hand = new Hand();
         Assert.assertArrayEquals(new int[]{0}, hand.getSoftHandValues());
     }
+    @Test
+    public void isNotSoftHand(){
+        Hand hand = new Hand();
+        hand.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        hand.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        Assert.assertEquals(false, hand.isSoftHand());
+    }
+    @Test
+    public void isSoftHand(){
+        Hand hand = new Hand();
+        hand.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        hand.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Assert.assertEquals(true, hand.isSoftHand());
+    }
 }

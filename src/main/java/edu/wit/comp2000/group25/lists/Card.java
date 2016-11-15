@@ -38,9 +38,9 @@ public class Card implements Comparator<Card>, Comparable<Card>{
 
     @Override
     public int compareTo(Card o) {
-        if(o.getSuit() != this.getSuit())
-            return o.getSuit().compareTo(this.getSuit());
-        return o.getValue().compareTo(this.getValue());
+        if(this.getSuit() != o.getSuit())
+            return this.getSuit().compareTo(o.getSuit());
+        return this.getValue().compareTo(o.getValue());
     }
 
     @Override

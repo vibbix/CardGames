@@ -1,4 +1,4 @@
-# Card Games [![Build Status](https://travis-ci.org/vibbix/CardGames.svg?branch=master)](https://travis-ci.org/vibbix/CardGames) [![Coverage Status](https://coveralls.io/repos/github/vibbix/CardGames/badge.svg?branch=master)](https://coveralls.io/github/vibbix/CardGames?branch=master)
+# Card Games [![Build Status](https://travis-ci.org/vibbix/CardGames.svg?branch=master)](https://travis-ci.org/vibbix/CardGames)  [![Coverage Status](https://coveralls.io/repos/github/vibbix/CardGames/badge.svg?branch=master)](https://coveralls.io/github/vibbix/CardGames?branch=master) [![codebeat badge](https://codebeat.co/badges/28d95e97-508f-469d-a13e-fdb529fb8d7d)](https://codebeat.co/projects/github-com-vibbix-cardgames)
 ![Card Games](https://media.giphy.com/media/xT9DPlAUKTl1GeZjC8/giphy.gif)
 
 
@@ -9,10 +9,10 @@ This is the Group 25's Card Games project to demonstrate the List ADT.
 ## How to build
 1. Install the latest version of JDK 8 or newer. 
 2. Clone the repository to a local directory. 
-3. Import the project in your preferred IDE(I suggest IntelliJ IDEA, but Eclipse will work. If you say NetBeans, I'll delete your repository access).
+3. Import the project in the latest version of your preferred IDE(I suggest IntelliJ IDEA, but Eclipse will work. If you say NetBeans, I'll delete your repository access).
 4. Build and run the project.
 
-The project is setup as a Maven-based project, so any IDE thats Maven aware should be fine. If you have Maven installed, and its on your path, running this will compile a jar: 
+The project is setup as a Maven-based project, so any IDE that's Maven aware should be fine. If you have Maven installed, and its on your path, running this will compile a jar: 
 
 ```
 mvn package

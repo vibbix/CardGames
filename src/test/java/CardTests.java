@@ -46,19 +46,32 @@ public class CardTests {
     }
 
     @Test
-    public void compareTo() {
+    public void compareToValues() {
         Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
         Card c2 = new Card(CardSuit.Diamonds, CardValue.Ace);
         Assert.assertEquals(0, c1.compareTo(c2));
     }
 
     @Test
-    public void compare() {
+    public void compareValues() {
         Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
         Card c2 = new Card(CardSuit.Diamonds, CardValue.Two);
         Assert.assertEquals(-1, c1.compare(c1, c2));
     }
 
+    @Test
+    public void compareToSuits() {
+        Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Hearts, CardValue.Ace);
+        Assert.assertEquals(-1, c1.compareTo(c2));
+    }
+
+    @Test
+    public void compareSuits() {
+        Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
+        Card c2 = new Card(CardSuit.Hearts, CardValue.Ace);
+        Assert.assertEquals(-1, c1.compare(c1, c2));
+    }
     @Test
     public void compareEqual() {
         Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);
