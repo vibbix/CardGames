@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * Created by beznosm on 11/14/2016.
  */
-public class HandTest {
+public class HandTests {
     @Test
     public void getSoftHandValuesAllAces(){
         Hand hand = new Hand();

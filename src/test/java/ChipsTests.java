@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * Created by beznosm on 11/10/2016.
  */
-public class ChipsTest {
+public class ChipsTests {
     @Test
     public void TestChipValue(){
         Chips thousand = Chips.Thousand;

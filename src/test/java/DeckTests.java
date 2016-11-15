@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * Created by beznosm on 11/10/2016.
  */
-public class DeckTest {
+public class DeckTests {
     @Test
     public void createSimpleDeck(){
         Deck d = new Deck();
