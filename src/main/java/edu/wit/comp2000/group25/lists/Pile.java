@@ -31,6 +31,8 @@ public class Pile {
      * @param card Card to add to pile
      */
     public void enqueueCard(Card card){
+        if (card == null)
+            throw new IllegalArgumentException("Card cannot be null");
         this.cardCollection.add(card);
     }
 
@@ -48,6 +50,10 @@ public class Pile {
      */
     public void shuffle(){
         Collections.shuffle(this.cardCollection);
+    }
+
+    public void sort(){
+        Collections.sort(this.cardCollection);
     }
 
     /**

@@ -1,10 +1,15 @@
 package edu.wit.comp2000.group25.lists;
 
+import edu.wit.comp2000.group25.lists.Enums.CardSuit;
+import edu.wit.comp2000.group25.lists.Enums.CardValue;
+
 /**
- * Created by beznosm on 11/9/2016.
+ * The main method
  */
 public class Main {
     public static void main(String[] args){
-        System.out.println("hello world");
+        for(CardSuit cs: CardSuit.values())
+            for (CardValue cv: CardValue.values())
+                System.out.println(new Card(cs,cv).toString());
     }
 }

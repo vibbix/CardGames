@@ -1,7 +1,8 @@
 package edu.wit.comp2000.group25.lists.Enums;
 
+
 /**
- * Created by beznosm on 11/10/2016.
+ * Suits for a card
  */
 public enum CardSuit {
     Clubs('♣'),
@@ -9,7 +10,7 @@ public enum CardSuit {
     Hearts('♥'),
     Spades('♠');
     private char symbol;
-    private CardSuit(char Symbol){
+    CardSuit(char Symbol){
         this.symbol = Symbol;
     }
 
@@ -17,6 +18,6 @@ public enum CardSuit {
      * @return The cards unicode symbol
      */
     public char getSymbol(){
-        return this.getSymbol();
+        return this.symbol;
     }
 }
