@@ -1,10 +1,11 @@
-package edu.wit.comp2000.group25.lists;
+package edu.wit.comp2000.group25.lists.Collections;
 
+import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
 
 /**
- * Created by beznosm on 11/10/2016.
+ * The card deck
  */
 public class Deck extends Pile {
     /**
@@ -23,17 +24,27 @@ public class Deck extends Pile {
         if (decks < 0){
             throw new IllegalArgumentException("Decks cannot be less than 1");
         }
-        for(int i = 0; i < decks; i++){
-            for(CardSuit cs : CardSuit.values()){
-                for(CardValue cv: CardValue.values())
-                {
-                    super.enqueueCard(new Card(cs, cv));
-                }
-            }
-        }
+        for(int i = 0; i < decks; i++) generateDeck();
         super.shuffle();
     }
+
+    /**
+     * Deals a card from the deck
+     * @return a card from the deck
+     */
     public Card deal(){
         return super.dequeueCard();
+    }
+
+    /**
+     * Generates and appends a single 52-card deck
+     */
+    public void generateDeck(){
+        for(CardSuit cs : CardSuit.values()){
+            for(CardValue cv: CardValue.values())
+            {
+                super.enqueueCard(new Card(cs, cv));
+            }
+        }
     }
 }

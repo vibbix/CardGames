@@ -3,7 +3,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 /**
- * Created by beznosm on 11/10/2016.
+ * Tests for chips
  */
 public class ChipsTests {
     @Test

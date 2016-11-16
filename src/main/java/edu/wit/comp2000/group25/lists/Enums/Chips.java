@@ -1,7 +1,7 @@
 package edu.wit.comp2000.group25.lists.Enums;
 
 /**
- * Created by beznosm on 11/10/2016.
+ * The chips one can play with.
  */
 public enum Chips {
     One(1),

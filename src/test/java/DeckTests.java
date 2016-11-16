@@ -1,12 +1,12 @@
 import edu.wit.comp2000.group25.lists.Card;
-import edu.wit.comp2000.group25.lists.Deck;
+import edu.wit.comp2000.group25.lists.Collections.Deck;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by beznosm on 11/10/2016.
+ * Tests for the deck class
  */
 public class DeckTests {
     @Test(expected = IllegalArgumentException.class)
@@ -34,5 +34,11 @@ public class DeckTests {
         Card c = new Card(CardSuit.Diamonds, CardValue.Ace);
         d.enqueueCard(c);
         Assert.assertEquals(c, d.deal());
+    }
+    @Test
+    public void generateDeck(){
+        Deck d = new Deck(0);
+        d.generateDeck();
+        Assert.assertEquals(52, d.getCardCount());
     }
 }

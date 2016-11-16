@@ -1,12 +1,12 @@
 import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
-import edu.wit.comp2000.group25.lists.Hand;
+import edu.wit.comp2000.group25.lists.Collections.Hand;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by beznosm on 11/14/2016.
+ * Tests for a hand of cards
  */
 public class HandTests {
     @Test

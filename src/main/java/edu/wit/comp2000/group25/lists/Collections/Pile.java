@@ -1,4 +1,6 @@
-package edu.wit.comp2000.group25.lists;
+package edu.wit.comp2000.group25.lists.Collections;
+
+import edu.wit.comp2000.group25.lists.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,9 +1,7 @@
 import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
-import edu.wit.comp2000.group25.lists.Pile;
-import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
+import edu.wit.comp2000.group25.lists.Collections.Pile;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +10,7 @@ import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by beznosm on 11/14/2016.
+ * Tests for a pile of cards
  */
 public class PileTests {
     @Test

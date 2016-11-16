@@ -1,5 +1,6 @@
-package edu.wit.comp2000.group25.lists;
+package edu.wit.comp2000.group25.lists.Collections;
 
+import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
 
 /**
@@ -25,7 +26,6 @@ public class Hand extends Pile{
         }
         return false;
     }
-
 
     /**
      *
