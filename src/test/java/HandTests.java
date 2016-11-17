@@ -54,8 +54,9 @@ public class HandTests {
         hand.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
         Assert.assertEquals(true, hand.isSoftHand());
     }
+
     @Test
-    public void compareEqualHands(){
+    public void compareEqualHands() {
         Hand h1 = new Hand();
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
@@ -64,8 +65,9 @@ public class HandTests {
         h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
         Assert.assertEquals(0, h1.compare(h2));
     }
+
     @Test
-    public void compareToEqualHands(){
+    public void compareToEqualHands() {
         Hand h1 = new Hand();
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
@@ -74,8 +76,9 @@ public class HandTests {
         h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
         Assert.assertEquals(0, h1.compareTo(h1, h2));
     }
+
     @Test
-    public void compareToLosingHand(){
+    public void compareToLosingHand() {
         Hand h1 = new Hand();
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
@@ -84,8 +87,9 @@ public class HandTests {
         h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
         Assert.assertEquals(-1, h1.compareTo(h1, h2));
     }
+
     @Test
-    public void compareToWinningHand(){
+    public void compareToWinningHand() {
         Hand h1 = new Hand();
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
         h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));

@@ -42,7 +42,7 @@ public class DealerBank extends PlayerBank {
     public String toString() {
         if (isInfinite)
             return "DealerBank{money:∞}";
-        return "DealerBank{money:" + super.getMoney() + "}";
+        return "DealerBank{money: " + super.getMoney() + "}";
     }
 
 

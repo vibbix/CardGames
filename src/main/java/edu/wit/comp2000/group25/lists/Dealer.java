@@ -25,7 +25,7 @@ public class Dealer {
     /**
      * @return True if the
      */
-    private boolean checkForBlackjack() {
+    protected boolean checkForBlackjack() {
         return Arrays.asList(this.dealerHand.getSoftHandValues()).contains(21);
     }
 
@@ -36,10 +36,11 @@ public class Dealer {
      */
     public boolean mustHit() {
         //if hard 16 or soft 17 must hit
-        if (!this.dealerHand.isSoftHand()) {
-            return (this.dealerHand.getSoftHandValues()[0] <= 16);
+        if (this.dealerHand.isSoftHand()) {
+            int[] values = this.dealerHand.getSoftHandValues();
+            return values[values.length-1] <= 17;
         }
-        return Arrays.asList(this.dealerHand.toArray()).contains(17);
+        return this.dealerHand.getSoftHandValues()[0] <= 16;
     }
 
     public void hitDeck(Deck d) {
@@ -55,6 +56,7 @@ public class Dealer {
 
     /**
      * Gets the list of cards
+     *
      * @return Array of cards visible to the player
      */
     public Card[] getCards() {

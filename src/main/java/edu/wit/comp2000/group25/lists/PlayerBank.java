@@ -17,6 +17,7 @@ public class PlayerBank {
 
     /**
      * Transfers money from one bank to another.
+     *
      * @param pb    A player bank
      * @param money amount to transfer
      */
