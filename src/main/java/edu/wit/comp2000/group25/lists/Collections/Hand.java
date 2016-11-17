@@ -29,7 +29,10 @@ public class Hand extends Pile {
     }
 
     /**
-     * @return An array of integers specifying the range of possible values for a soft hands
+     * Creates an array of integers representing the range of possible values
+     * for a soft hand.
+     *
+     * @return Array of possible values
      */
     public int[] getSoftHandValues() {
         int aces = 0;//value = 1 or 11
@@ -51,13 +54,14 @@ public class Hand extends Pile {
         }
         return hands;
     }
-    private int handValue(Hand hand){
+
+    private int handValue(Hand hand) {
         int best = 0;
-        for(int h : hand.getSoftHandValues()){
-            if (best == 0){
+        for (int h : hand.getSoftHandValues()) {
+            if (best == 0) {
                 best = h;
             }
-            if(h > best && h < 22){
+            if (h > best && h < 22) {
                 best = h;
             }
         }
@@ -66,25 +70,26 @@ public class Hand extends Pile {
 
     /**
      * Checks which hand is of higher value, but not black jack
+     *
      * @param h1 The first hand to compare
      * @param h2 The second hand to compare
      * @return 1 if h1 is closer to blackjack than h2. 0 if they are equal, -1 if h2 is closer.
      */
-    public int compareTo(Hand h1, Hand h2){
+    public int compareTo(Hand h1, Hand h2) {
         int b1 = handValue(h1);
         int b2 = handValue(h2);
-        if(b1 > b2)
+        if (b1 > b2)
             return 1;
         else if (b1 == b2)
             return 0;
         return -1;
     }
+
     /**
-     *
      * @param h The hand to compare this hand against
      * @return 1 if this hand is closer to blackjack than h. 0 if they are equal, -1 if h is closer.
      */
-    public int compare(Hand h){
+    public int compare(Hand h) {
         return compareTo(this, h);
     }
 }

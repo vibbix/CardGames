@@ -11,7 +11,7 @@ import java.util.Arrays;
 @SuppressWarnings("SuspiciousMethodCalls")
 public class Dealer {
     private Hand dealerHand;
-    private Game g;
+    private Blackjack g;
     private boolean hasRevealed;
 
     /**
@@ -38,7 +38,7 @@ public class Dealer {
         //if hard 16 or soft 17 must hit
         if (this.dealerHand.isSoftHand()) {
             int[] values = this.dealerHand.getSoftHandValues();
-            return values[values.length-1] <= 17;
+            return values[values.length - 1] <= 17;
         }
         return this.dealerHand.getSoftHandValues()[0] <= 16;
     }

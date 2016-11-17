@@ -1,241 +1,134 @@
 package edu.wit.comp2000.group25.lists;
 
-import edu.wit.comp2000.group25.lists.Collections.Deck;
-import edu.wit.comp2000.group25.lists.Enums.CardValue;
-import edu.wit.comp2000.group25.lists.Enums.GameState;
-import edu.wit.comp2000.group25.lists.Enums.PlayerMoves;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
- * The game class
+ * The main method
  */
 public class Game {
-    private Deck deck;
-    private GameState gs;
-    private Dealer dealer;
-    private Player player;
+    private final static String STR_DECKS = "Decks to play with(Suggested: 4-8): ";
+    private final static String STR_DEALERMONEY = "Money for player to start with: ";
+    private final static String STR_PLAYERMONEY = "Money for dealer to start with (0 for unlimited): ";
+    private Blackjack blackjack;
+    private Scanner scanner;
     private PrintStream out;
-    private int matchnum;
-    private int playerWager;
-    private PlayerBank playerBank;
-    private DealerBank dealerBank;
 
     /**
-     * Creates a new game
-     *
-     * @param decks       Numbers of decks to play with (at least 1 deck)
-     * @param dealerMoney Amount dealer starts with (at least $100, or $0 for unlimited)
-     * @param playerMoney Amount player starts with (at least $100)
-     * @param out         PrintStream to output to (i.e System.out)
-     * @throws IllegalArgumentException
+     * @param ps          PrintStream to output to(i.e. System.out)
+     * @param in          InputStream to use (i.e. System.in)
+     * @param playDecks   Number of decks to play with (Min. 1)
+     * @param dealerMoney Amount of money dealer starts with (0 for infinity, otherwise start at $100)
+     * @param playerMoney Amount of money player starts with (Min. 100)
      */
-    public Game(int decks, int dealerMoney, int playerMoney, PrintStream out) {
-        if (decks < 1) {
-            throw new IllegalArgumentException("Must have at least 1 deck.");
-        }
-        if (dealerMoney < 100) {
-            throw new IllegalArgumentException("Dealer must have at least $100");
-        }
-        if (playerMoney < 100) {
-            throw new IllegalArgumentException("Player must have at least $100");
-        }
+    public Game(PrintStream ps, InputStream in, int playDecks, int dealerMoney, int playerMoney) {
+        this.out = ps;
+        this.scanner = new Scanner(in);
+        this.blackjack = new Blackjack(playDecks, dealerMoney, playerMoney, ps);
+    }
+
+    /**
+     * @param out Printstream to output to (i.e. System.out)
+     * @param in  InputStream to take input from (i.e. System.in)
+     */
+    public Game(PrintStream out, InputStream in) {
         this.out = out;
-        this.deck = new Deck(decks);
-        this.gs = GameState.GameBegin;
-        this.dealer = new Dealer();
-        if (dealerMoney == 0) {
-            this.dealerBank = new DealerBank();
-        } else {
-            this.dealerBank = new DealerBank(dealerMoney);
+        this.scanner = new Scanner(in);
+        this.initializeGame();
+    }
+
+    public static void main(String[] args) {
+        Game m = new Game(System.out, System.in);
+        m.startGame();
+    }
+
+    private void initializeGame() {
+        int decks = this.getInt(STR_DECKS, 1);
+        int playermoney = this.getInt(STR_PLAYERMONEY, 100);
+        int dealermoney = this.getInt(STR_DEALERMONEY, 0);
+        while (true) {
+            if (dealermoney != 0 && dealermoney < 100) {
+                this.out.println("Dealer must have at least $100");
+                dealermoney = this.getInt(STR_DEALERMONEY, 0);
+                continue;
+            }
+            break;
         }
-        this.playerBank = new PlayerBank(playerMoney);
+        this.blackjack = new Blackjack(decks, dealermoney, playermoney, this.out);
+
     }
 
-    /**
-     * Executes the next phase in the game, returning true
-     * when
-     *
-     * @return True is successfully transitioned
-     */
-    public boolean nextPhase() {
-        switch (this.gs) {
-            case GameBegin:
-                return this.gsGameBegin();
-            case PlayerWantsToStartMatch:
-                return this.gsPlayerWantsToStartMatch();
-            case CanStartNewMatch:
-                return this.gsCanStartNewMatch();
-            case NewMatch:
-                return this.gsNewMatch();
-            case PlayersPlaceWagers:
-                return this.gsPlayersPlaceWagers();
-            case DealerPlacesPlayerCards:
-                return this.gsDealerPlacesPlayerCards();
-            case DealerGivesSelfCards:
-                return this.gsDealerGivesSelfCards();
-            case DealerCheckForAce:
-                return this.gsDealerCheckForAce();
-            case PlayersPlaceInsurance:
-                return this.gsPlayersPlaceInsurance();
-            case DealerCheckInsurance:
-                return this.gsDealerCheckInsurance();
-            case PlayerTurn:
-                return this.gsPlayerTurn();
-            case DealerFlipCard:
-                return this.gsDealerFlipCard();
-            case DealerHit:
-                return this.gsDealerHit();
-            case DealerDistributeWinnings:
-                return this.gsDealerDistributeWinnings();
-            case MatchEnd:
-                return this.gsMatchEnd();
-            case GameEnd:
-                return this.gsGameEnd();
-        }
-        return false;
-    }
-
-    //region GameStates
-    private boolean gsGameBegin() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsPlayerWantsToStartMatch() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsCanStartNewMatch() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsNewMatch() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsPlayersPlaceWagers() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsDealerPlacesPlayerCards() {
-        for (int i = 0; i < 2; i++)
-            this.player.hit();
-        this.gs = GameState.DealerGivesSelfCards;
-        return true;
-    }
-
-    private boolean gsDealerGivesSelfCards() {
-        for (int i = 0; i < 2; i++)
-            this.dealerHit();
-        this.gs = GameState.DealerCheckForAce;
-        return true;
-    }
-
-    private boolean gsDealerCheckForAce() {
-        if (this.dealer.getCards()[0].getValue() == CardValue.Ace) {
-            this.gs = GameState.PlayersPlaceInsurance;
-            return true;
-        } else {
-            this.gs = GameState.PlayerTurn;
-            return true;
+    public void startGame() {
+        while (true) {
+            if (this.blackjack.getGameState().getIsPlayerPhase()) {
+                switch (this.blackjack.getGameState()) {
+                    case PlayerWantsToStartMatch:
+                        if (!this.playerWantsToStartMatch()) {
+                            return;
+                        }
+                        break;
+                    case PlayersPlaceWagers:
+                        this.playerPlaceWagers();
+                        break;
+                    case PlayersPlaceInsurance:
+                        this.playersPlaceInsurance();
+                        break;
+                    case PlayerTurn:
+                        this.playerTurn();
+                        break;
+                    case GameEnd:
+                        this.gameEnd();
+                        return;
+                }
+            } else {
+                this.blackjack.nextPhase();
+            }
         }
     }
 
-    private boolean gsPlayersPlaceInsurance() {
+    private int playerPlaceWagers() {
         throw new NotImplementedException();
     }
 
-    private boolean gsDealerCheckInsurance() {
+    private boolean playerWantsToStartMatch() {
         throw new NotImplementedException();
     }
 
-    private boolean gsPlayerTurn() {
+    private void playerTurn() {
         throw new NotImplementedException();
     }
 
-    private boolean gsDealerFlipCard() {
+    private int playersPlaceInsurance() {
         throw new NotImplementedException();
     }
 
-    private boolean gsDealerHit() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsDealerDistributeWinnings() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsMatchEnd() {
-        throw new NotImplementedException();
-    }
-
-    private boolean gsGameEnd() {
-        throw new NotImplementedException();
-    }
-
-
-    //endregion
-    //region Helper methods
-    private void dealerHit() {
-        this.dealer.hitDeck(this.deck);
-    }
-
-    private PlayerMoves[] getPossiblePlayerMoves() {
+    private void gameEnd() {
         throw new NotImplementedException();
     }
 
     /**
-     * Starts a new match
-     */
-    public void newMatch() {
-        this.gs = GameState.NewMatch;
-        matchnum++;
-    }
-
-    /**
-     * Gets the current state of the game
+     * Gets an integer from the user.
      *
-     * @return The current state
+     * @param question The prompt to ask the user
+     * @param min      The minimum the response can be
+     * @return The number of decks the player wants to play with
      */
-    //endregion
-    public GameState getGameState() {
-        return this.gs;
+    private int getInt(String question, int min) {
+        while (true) {
+            try {
+                this.out.print(question);
+                int num = this.scanner.nextInt();
+                if (num < min) {
+                    this.out.println("Integer must be at least " + min + ".");
+                    continue;
+                }
+                return num;
+            } catch (Exception ex) {
+                this.out.print("Error parsing int.");
+            }
+        }
     }
-
-    /**
-     * Gets the game player
-     *
-     * @return The player
-     */
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    /**
-     * @return The card dealer
-     */
-    public Dealer getDealer() {
-        return this.dealer;
-    }
-
-    /**
-     * Gets the players bank
-     *
-     * @return The player bank
-     */
-    public PlayerBank getPlayerBank() {
-        return this.playerBank;
-    }
-
-    /**
-     * Gets the dealers bank
-     *
-     * @return The dealers bank
-     */
-    public DealerBank getDealerBank() {
-        return this.dealerBank;
-    }
-
-
 }

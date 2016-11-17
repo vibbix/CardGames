@@ -9,18 +9,19 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class Player {
     private Hand[] hands;
-    private Game game;
+    private Blackjack blackjack;
     private PlayerBank playerBank;
     private boolean hasSplit;
 
-    public Player(Game game) {
+    public Player(Blackjack blackjack) {
         this.hands = new Hand[4];
-        this.game = game;
-        this.playerBank = game.getPlayerBank();
+        this.blackjack = blackjack;
+        this.playerBank = blackjack.getPlayerBank();
         this.hasSplit = false;
     }
 
     //region player moves
+
     public void placeWager(int money) {
 
     }
