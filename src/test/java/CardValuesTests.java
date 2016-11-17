@@ -7,12 +7,13 @@ import org.junit.Test;
  */
 public class CardValuesTests {
     @Test
-    public void getValueAce(){
+    public void getValueAce() {
         CardValue cv = CardValue.Ace;
         Assert.assertEquals(1, cv.getValue());
     }
+
     @Test
-    public void getValueOfAce(){
+    public void getValueOfAce() {
         CardValue cv = CardValue.valueOf("Ace");
         Assert.assertEquals(CardValue.Ace, cv);
     }

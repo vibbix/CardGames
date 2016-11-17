@@ -7,7 +7,7 @@ import org.junit.Test;
  */
 public class ChipsTests {
     @Test
-    public void TestChipValue(){
+    public void TestChipValue() {
         Chips thousand = Chips.Thousand;
         Assert.assertEquals(1000, thousand.getChipValue());
     }

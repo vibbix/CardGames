@@ -11,10 +11,12 @@ public enum Chips {
     Hundred(100),
     Thousand(1000);
     private int chipValue;
-    private Chips(int value){
+
+    Chips(int value) {
         this.chipValue = value;
     }
-    public int getChipValue(){
+
+    public int getChipValue() {
         return this.chipValue;
     }
 

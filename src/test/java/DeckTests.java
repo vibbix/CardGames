@@ -10,33 +10,38 @@ import org.junit.Test;
  */
 public class DeckTests {
     @Test(expected = IllegalArgumentException.class)
-    public void createIllegalDeck(){
+    public void createIllegalDeck() {
         Deck d = new Deck(-1);
     }
+
     @Test
-    public void createSimpleDeck(){
+    public void createSimpleDeck() {
         Deck d = new Deck();
         Assert.assertEquals(52, d.getCardCount());
     }
+
     @Test
-    public void createEmptyDeck(){
+    public void createEmptyDeck() {
         Deck d = new Deck(0);
         Assert.assertEquals(0, d.getCardCount());
     }
+
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void dequeueEmptyDeck(){
+    public void dequeueEmptyDeck() {
         Deck d = new Deck(0);
         d.deal();
     }
+
     @Test
-    public void dealCard(){
+    public void dealCard() {
         Deck d = new Deck(0);
         Card c = new Card(CardSuit.Diamonds, CardValue.Ace);
         d.enqueueCard(c);
         Assert.assertEquals(c, d.deal());
     }
+
     @Test
-    public void generateDeck(){
+    public void generateDeck() {
         Deck d = new Deck(0);
         d.generateDeck();
         Assert.assertEquals(52, d.getCardCount());
