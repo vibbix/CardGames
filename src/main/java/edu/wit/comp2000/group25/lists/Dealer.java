@@ -1,6 +1,5 @@
 package edu.wit.comp2000.group25.lists;
 
-import edu.wit.comp2000.group25.lists.Collections.Deck;
 import edu.wit.comp2000.group25.lists.Collections.Hand;
 
 import java.util.Arrays;
@@ -11,28 +10,30 @@ import java.util.Arrays;
 @SuppressWarnings("SuspiciousMethodCalls")
 public class Dealer {
     private Hand dealerHand;
-    private Blackjack g;
+    private Blackjack blackjack;
     private boolean hasRevealed;
 
     /**
      * Creates a new blackjack dealer
+     * @param blackjack The current game
      */
-    public Dealer() {
+    public Dealer(Blackjack blackjack) {
+        this.blackjack = blackjack;
         this.dealerHand = new Hand();
         this.hasRevealed = false;
     }
 
     /**
-     * @return True if the
+     * @return True if the dealers hand is blackjack.
      */
     protected boolean checkForBlackjack() {
         return Arrays.asList(this.dealerHand.getSoftHandValues()).contains(21);
     }
 
     /**
-     * Checks if the dealer must hit anothe rcard.
+     * Checks if the dealer must hit another card.
      *
-     * @return True if dealer has hard 16, soft 17, or less
+     * @return True if dealer has at most a soft 17 or hard 16.
      */
     public boolean mustHit() {
         //if hard 16 or soft 17 must hit
@@ -43,8 +44,11 @@ public class Dealer {
         return this.dealerHand.getSoftHandValues()[0] <= 16;
     }
 
-    public void hitDeck(Deck d) {
-        this.dealerHand.enqueueCard(d.dequeueCard());
+    /**
+     * Adds a card to the dealers hand
+     */
+    public void hitDeck() {
+        this.dealerHand.enqueueCard(this.blackjack.dequeueCard());
     }
 
     /**
@@ -60,7 +64,7 @@ public class Dealer {
      * @return Array of cards visible to the player
      */
     public Card[] getCards() {
-        if (this.hasRevealed)
+        if (!this.hasRevealed)
             return Arrays.copyOfRange(this.dealerHand.toArray(), 0, 1);
         return this.dealerHand.toArray();
     }

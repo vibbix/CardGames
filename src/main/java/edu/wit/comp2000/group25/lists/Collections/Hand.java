@@ -3,6 +3,8 @@ package edu.wit.comp2000.group25.lists.Collections;
 import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
 
+import java.util.Arrays;
+
 /**
  * The hand of cards a player holds
  */
@@ -92,4 +94,11 @@ public class Hand extends Pile {
     public int compare(Hand h) {
         return compareTo(this, h);
     }
+
+
+    @Override
+    public String toString(){
+        return "Hand{"+ Arrays.toString(this.toArray())+"}";
+    }
+
 }

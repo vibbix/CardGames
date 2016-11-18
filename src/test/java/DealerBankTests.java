@@ -84,6 +84,15 @@ public class DealerBankTests {
         Assert.assertEquals(0, db1.getMoney());
         Assert.assertEquals(100, db2.getMoney());
     }
-
+    @Test
+    public void isInfinite(){
+        DealerBank db = new DealerBank();
+        Assert.assertEquals(true, db.isInfinite());
+    }
+    @Test
+    public void isNotInfinite(){
+        DealerBank db = new DealerBank(0);
+        Assert.assertEquals(false, db.isInfinite());
+    }
 
 }

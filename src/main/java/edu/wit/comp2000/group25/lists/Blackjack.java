@@ -21,6 +21,7 @@ public class Blackjack {
     private int playerWager;
     private PlayerBank playerBank;
     private DealerBank dealerBank;
+    private PlayerInput playerInput;
 
     /**
      * Creates a new game
@@ -29,7 +30,7 @@ public class Blackjack {
      * @param dealerMoney Amount dealer starts with (at least $100, or $0 for unlimited)
      * @param playerMoney Amount player starts with (at least $100)
      * @param out         PrintStream to output to (i.e System.out)
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException Thrown if arguments are invalid
      */
     public Blackjack(int decks, int dealerMoney, int playerMoney, PrintStream out) {
         if (decks < 1) {
@@ -44,18 +45,17 @@ public class Blackjack {
         this.out = out;
         this.deck = new Deck(decks);
         this.gs = GameState.GameBegin;
-        this.dealer = new Dealer();
-        if (dealerMoney == 0) {
-            this.dealerBank = new DealerBank();
-        } else {
-            this.dealerBank = new DealerBank(dealerMoney);
-        }
+        this.dealer = new Dealer(this);
+        this.player = new Player(this);
+        this.dealerBank = (dealerMoney == 0? new DealerBank() : new DealerBank(dealerMoney));
+        this.playerInput = new PlayerInput();
         this.playerBank = new PlayerBank(playerMoney);
+        this.matchnum = 0;
     }
 
     /**
      * Executes the next phase in the game, returning true
-     * when
+     * if the state successfully transitioned
      *
      * @return True is successfully transitioned
      */
@@ -70,7 +70,7 @@ public class Blackjack {
             case NewMatch:
                 return this.gsNewMatch();
             case PlayersPlaceWagers:
-                return this.gsPlayersPlaceWagers();
+                return this.gsPlayerPlaceWagers();
             case DealerPlacesPlayerCards:
                 return this.gsDealerPlacesPlayerCards();
             case DealerGivesSelfCards:
@@ -78,7 +78,7 @@ public class Blackjack {
             case DealerCheckForAce:
                 return this.gsDealerCheckForAce();
             case PlayersPlaceInsurance:
-                return this.gsPlayersPlaceInsurance();
+                return this.gsPlayerPlaceInsurance();
             case DealerCheckInsurance:
                 return this.gsDealerCheckInsurance();
             case PlayerTurn:
@@ -99,23 +99,60 @@ public class Blackjack {
 
     //region GameStates
     private boolean gsGameBegin() {
-        throw new NotImplementedException();
+        this.gs = GameState.CanStartNewMatch;
+        return true;
     }
 
     private boolean gsPlayerWantsToStartMatch() {
-        throw new NotImplementedException();
+        if(this.playerInput.getGotInput()) {
+            if (this.playerInput.isPlayNextMatch()) {
+                this.gs = GameState.CanStartNewMatch;
+            } else {
+                this.gs = GameState.GameEnd;
+            }
+            return true;
+        }
+        return false;
     }
 
     private boolean gsCanStartNewMatch() {
-        throw new NotImplementedException();
+        if(this.playerBank.getMoney() < 1)
+        {
+            this.out.println("Player is bankrupt. Game over.");
+            this.gs = GameState.GameEnd;
+            return true;
+        }
+        if(!this.dealerBank.isInfinite() &&  this.dealerBank.getMoney() < 1){
+            this.out.println("Dealer is bankrupt. Game over.");
+            this.gs = GameState.GameEnd;
+            return true;
+        }
+        if(this.dealer.getCards().length < 5){
+            this.out.println("Dealer ran out of cards. Game Over.");
+            this.gs = GameState.GameEnd;
+            return true;
+        }
+        this.gs = GameState.NewMatch;
+        matchnum++;
+        return true;
+
     }
 
     private boolean gsNewMatch() {
-        throw new NotImplementedException();
+        //reset player input
+        this.playerInput = new PlayerInput();
+        this.gs = GameState.PlayersPlaceWagers;
+        return true;
     }
 
-    private boolean gsPlayersPlaceWagers() {
-        throw new NotImplementedException();
+    private boolean gsPlayerPlaceWagers() {
+        if(this.playerInput.getGotInput()){
+            if(this.playerInput.getCurrentWager(0) > 1){
+                this.gs = GameState.DealerPlacesPlayerCards;
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean gsDealerPlacesPlayerCards() {
@@ -127,7 +164,7 @@ public class Blackjack {
 
     private boolean gsDealerGivesSelfCards() {
         for (int i = 0; i < 2; i++)
-            this.dealerHit();
+            this.dealer.hitDeck();
         this.gs = GameState.DealerCheckForAce;
         return true;
     }
@@ -136,61 +173,93 @@ public class Blackjack {
         if (this.dealer.getCards()[0].getValue() == CardValue.Ace) {
             this.gs = GameState.PlayersPlaceInsurance;
             return true;
-        } else {
-            this.gs = GameState.PlayerTurn;
-            return true;
         }
+        this.gs = GameState.PlayerTurn;
+        return true;
     }
 
-    private boolean gsPlayersPlaceInsurance() {
-        throw new NotImplementedException();
+    private boolean gsPlayerPlaceInsurance() {
+        if(this.playerInput.getCurrentInsurance() > -1){
+            this.gs = GameState.DealerCheckInsurance;
+            return true;
+        }
+        return false;
     }
 
     private boolean gsDealerCheckInsurance() {
-        throw new NotImplementedException();
+        if(this.dealer.checkForBlackjack()){
+            this.gs = GameState.DealerDistributeWinnings;
+            return true;
+        }
+        this.gs = GameState.PlayerTurn;
+        return true;
     }
 
     private boolean gsPlayerTurn() {
-        throw new NotImplementedException();
+        if(this.playerInput.isPlayerTurnDone())
+        {
+            this.gs = GameState.DealerFlipCard;
+            return true;
+        }
+        return false;
     }
 
     private boolean gsDealerFlipCard() {
-        throw new NotImplementedException();
+        this.dealer.revealCards();
+        if(this.dealer.mustHit()){
+            this.gs = GameState.DealerHit;
+        } else{
+            this.gs = GameState.DealerDistributeWinnings;
+        }
+        return true;
+
     }
 
     private boolean gsDealerHit() {
-        throw new NotImplementedException();
+        this.dealer.hitDeck();
+        if(this.dealer.mustHit()){
+            return true;
+        }
+        this.gs = GameState.DealerDistributeWinnings;
+        return true;
     }
 
     private boolean gsDealerDistributeWinnings() {
-        throw new NotImplementedException();
+        //check insurance
+        if(this.playerInput.getCurrentInsurance() > -1){
+            if(this.dealer.checkForBlackjack()){
+                this.dealerBank.transferTo(this.playerBank, 2 * this.playerInput.getCurrentInsurance());
+            } else {
+                this.playerBank.transferTo(this.dealerBank, this.playerInput.getCurrentInsurance());
+            }
+        }
+        //
+        //Hand[] playerHands = this.player
+        return false;
     }
 
     private boolean gsMatchEnd() {
-        throw new NotImplementedException();
+        this.gs = GameState.PlayerWantsToStartMatch;
+        return true;
     }
 
     private boolean gsGameEnd() {
-        throw new NotImplementedException();
+        return false;
     }
-
 
     //endregion
     //region Helper methods
-    private void dealerHit() {
-        this.dealer.hitDeck(this.deck);
-    }
 
     private PlayerMoves[] getPossiblePlayerMoves() {
         throw new NotImplementedException();
     }
 
     /**
-     * Starts a new match
+     * Dequeues a card from the deck
+     * @return A card
      */
-    public void newMatch() {
-        this.gs = GameState.NewMatch;
-        matchnum++;
+    public Card dequeueCard(){
+        return this.deck.dequeueCard();
     }
 
     /**
@@ -237,5 +306,7 @@ public class Blackjack {
         return this.dealerBank;
     }
 
-
+    public PlayerInput getPlayerInput(){
+        return this.playerInput;
+    }
 }

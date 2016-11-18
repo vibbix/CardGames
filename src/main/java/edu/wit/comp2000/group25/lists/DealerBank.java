@@ -45,5 +45,13 @@ public class DealerBank extends PlayerBank {
         return "DealerBank{money: " + super.getMoney() + "}";
     }
 
+    /**
+     * Checks whether the dealer bank has infinite funds
+     * @return True if the bank is infinite; Otherwise false
+     */
+    public boolean isInfinite(){
+        return this.isInfinite;
+    }
+
 
 }

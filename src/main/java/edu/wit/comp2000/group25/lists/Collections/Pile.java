@@ -1,8 +1,10 @@
 package edu.wit.comp2000.group25.lists.Collections;
 
+import com.sun.deploy.util.StringUtils;
 import edu.wit.comp2000.group25.lists.Card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -68,5 +70,16 @@ public class Pile {
      */
     public int getCardCount() {
         return this.cardCollection.size();
+    }
+
+    /**
+     * Clears the pile
+     */
+    public void clear(){
+        this.cardCollection.clear();
+    }
+    @Override
+    public String toString(){
+        return "Pile{"+ StringUtils.join(this.cardCollection, ", ") +"}";
     }
 }
