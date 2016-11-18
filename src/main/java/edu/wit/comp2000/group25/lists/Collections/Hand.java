@@ -90,17 +90,24 @@ public class Hand extends Pile {
     /**
      * Checks which hand is of higher value, but not black jack
      *
-     * @param h1 The first hand to compare
-     * @param h2 The second hand to compare
-     * @return 1 if h1 is closer to blackjack than h2. 0 if they are equal, -1 if h2 is closer.
+     * @param player The first hand to compare
+     * @param dealer The second hand to compare
+     * @return 1 if player is closer to blackjack than dealer. 0 if they are equal, -1 if dealer is closer.
      */
-    public int compareTo(Hand h1, Hand h2) {
-        int b1 = handValue(h1);
-        int b2 = handValue(h2);
-        if (b1 > b2)
+    public int compareTo(Hand player, Hand dealer) {
+        int b1 = handValue(player);
+        int b2 = handValue(dealer);
+        if (b1 > 21 && b2 > 21){
+            return -1;
+        }
+        else if (b1 > 21 && b2 <= 21) {
+            return -1;
+        }
+        else if (b1 > b2) {
             return 1;
-        else if (b1 == b2)
+        }else if (b1 == b2) {
             return 0;
+        }
         return -1;
     }
 
@@ -113,7 +120,8 @@ public class Hand extends Pile {
     }
 
     /**
-     * @return
+     * Checks if hand is blackjack
+     * @return true if hand is blackjack
      */
     public boolean isBlackjack() {
         return Arrays.stream(this.getSoftHandValues()).anyMatch(i -> i == 21);
@@ -122,6 +130,15 @@ public class Hand extends Pile {
     @Override
     public String toString() {
         return "Hand{" + Arrays.toString(this.toArray()) + "}";
+    }
+
+    /**
+     * Checks if hand has busted
+     * @return True if hand has busted
+     */
+    public boolean hasBusted(){
+        int[] values = this.getSoftHandValues();
+        return Arrays.stream(values).allMatch( i -> i > 21);
     }
 
     @Override

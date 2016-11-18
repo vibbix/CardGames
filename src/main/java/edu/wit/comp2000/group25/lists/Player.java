@@ -233,5 +233,14 @@ public class Player {
     public Hand[] getHands() {
         return Arrays.stream(this.hands).filter(h -> h != null).toArray(Hand[]::new);
     }
+
+    /**
+     * Gets if the player has split a hand.
+     * @return True if the player has already split.
+     */
+    public boolean hasSplit() {
+        return hasSplit;
+    }
+
     //endregion
 }

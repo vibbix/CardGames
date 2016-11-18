@@ -1,5 +1,8 @@
 package edu.wit.comp2000.group25.lists;
 
+import edu.wit.comp2000.group25.lists.Collections.Hand;
+import edu.wit.comp2000.group25.lists.Enums.PlayerMoves;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -10,8 +13,8 @@ import java.util.Scanner;
  */
 public class Game {
     private final static String STR_DECKS = "Decks to play with(Suggested: 4-8): ";
-    private final static String STR_DEALERMONEY = "Money for player to start with: ";
-    private final static String STR_PLAYERMONEY = "Money for dealer to start with (0 for unlimited): ";
+    private final static String STR_PLAYERMONEY = "Money for player to start with: ";
+    private final static String STR_DEALERMONEY = "Money for dealer to start with (0 for unlimited): ";
     private Blackjack blackjack;
     private Scanner scanner;
     private PrintStream out;
@@ -51,7 +54,9 @@ public class Game {
         int playermoney = this.getInt(STR_PLAYERMONEY, 100);
         int dealermoney = this.getInt(STR_DEALERMONEY, 0);
         while (true) {
-            if (dealermoney != 0 && dealermoney < 100) {
+            if(dealermoney == 0)
+                break;
+            else if (dealermoney < 100) {
                 this.out.println("Dealer must have at least $100");
                 dealermoney = this.getInt(STR_DEALERMONEY, 0);
                 continue;
@@ -68,8 +73,10 @@ public class Game {
                 switch (this.blackjack.getGameState()) {
                     case PlayerWantsToStartMatch:
                         if (!this.playerWantsToStartMatch()) {
-                            return;
+                            this.blackjack.getPlayerInput().setPlayNextMatch(false);
+                            break;
                         }
+                        this.blackjack.getPlayerInput().setPlayNextMatch(true);
                         break;
                     case PlayersPlaceWagers:
                         int wager = this.playerPlaceWagers();
@@ -87,9 +94,8 @@ public class Game {
                         this.gameEnd();
                         return;
                 }
-            } else {
-                this.blackjack.nextPhase();
             }
+            this.blackjack.nextPhase();
         }
     }
 
@@ -123,14 +129,60 @@ public class Game {
     }
 
     private void playerTurn() {
+        Player p = this.blackjack.getPlayer();
         while (true) {
-            Player p = this.blackjack.getPlayer();
+            //if already busted
+
+            this.out.println("------------------------");
             this.out.println("Dealer hand: " +
                     Arrays.toString(this.blackjack.getDealer().getCards()));
             this.out.println("Player hand: " +
                     Arrays.toString(this.blackjack.getPlayer().getHands()));
-            this.out.println("Available Moves: " + Arrays.toString(p.getAvailableMoves(0)));
-            break;
+            this.out.println("Amount left in users bank: $" + (
+                    this.blackjack.getPlayerBank().getMoney() - this.blackjack.getPlayerInput().getTotalAmountBet()));
+            if(Arrays.stream(p.getHands()).allMatch(Hand::hasBusted)){
+                this.out.println("Player has busted.");
+                return;
+            }
+            //this.out.println("Available Moves: " + Arrays.toString(p.getAvailableMoves(0)));
+            this.out.println("Available Moves: Surrender, Hit, Double, Split, Stand");
+            this.out.println("Entering 'Stand' will end your turn.");
+            this.out.print("Move: ");
+            String next = this.scanner.next();
+            try{
+                PlayerMoves pm = PlayerMoves.valueOf(next);
+                int index = 0;
+                if(p.hasSplit()){
+                    index = this.getInt("Which hand would you like to perform that action on?: (0->3) ", 0);
+                }
+                //if any of the hands have not busted
+                if(Arrays.stream(p.getHands()).anyMatch(Hand::hasBusted))
+                {
+                    if(p.getHands()[index].hasBusted()){
+                        this.out.println("This hand has busted.");
+                        continue;
+                    }
+                }
+                if(pm == PlayerMoves.Hit){
+                    p.hit(index);
+                }
+                if(pm == PlayerMoves.Double){
+                    int wager = this.getInt("Amount to bet on: $", 0);
+                    p.doubleDown(wager, index);
+                }
+                if(pm == PlayerMoves.Split){
+                    int wager = this.getInt("Amount to bet on: $", 0);
+                    p.split(wager, index);
+                }
+                if(pm == PlayerMoves.Surrender){
+                    p.surrender(0);
+                }
+                if(pm == PlayerMoves.Stand){
+                    return;
+                }
+            }catch (Exception ex){
+                this.out.println("Error running command: " + ex.toString());
+            }
         }
     }
 

@@ -72,5 +72,13 @@ public class Dealer {
         return this.dealerHand.toArray();
     }
 
+    /**
+     * Gets the dealers hand
+     * @return The dealers hand
+     */
+    public Hand getHand(){
+        return this.dealerHand;
+    }
+
 
 }
