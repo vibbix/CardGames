@@ -148,6 +148,7 @@ public class Blackjack {
         this.playerInput = new PlayerInput();
         this.player.reset();
         this.gs = GameState.PlayersPlaceWagers;
+        this.dealer.reset();
         return true;
     }
 
@@ -268,7 +269,8 @@ public class Blackjack {
             } else if (compare < 0){
                 playerBank.transferTo(dealerBank, getPlayerInput().getTotalAmountBet(i));
                 this.out.println("Transferring winnings from player to dealer");
-
+            } else{
+                this.out.println("Cancelling wager; Equal points.");
             }
             getPlayerInput().setCurrentWager(0, i);
         }

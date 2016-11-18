@@ -71,6 +71,10 @@ public class Dealer {
             return Arrays.copyOfRange(this.dealerHand.toArray(), 0, 1);
         return this.dealerHand.toArray();
     }
+    public void reset(){
+        dealerHand.clear();
+        this.hasRevealed = false;
+    }
 
     /**
      * Gets the dealers hand
