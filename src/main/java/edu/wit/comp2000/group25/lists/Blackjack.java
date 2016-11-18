@@ -4,11 +4,8 @@ import edu.wit.comp2000.group25.lists.Collections.Deck;
 import edu.wit.comp2000.group25.lists.Collections.Hand;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
 import edu.wit.comp2000.group25.lists.Enums.GameState;
-import edu.wit.comp2000.group25.lists.Enums.PlayerMoves;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.PrintStream;
-import java.util.Arrays;
 
 /**
  * The game class
@@ -138,7 +135,7 @@ public class Blackjack {
         }
         this.gs = GameState.NewMatch;
         matchnum++;
-        this.out.println("Starting match #"+matchnum);
+        this.out.println("Starting match #" + matchnum);
         return true;
 
     }
@@ -261,15 +258,15 @@ public class Blackjack {
             }
         }
         Hand[] hands = this.player.getHands();
-        for (int i = 0; i < hands.length; i ++){
+        for (int i = 0; i < hands.length; i++) {
             int compare = hands[i].compare(this.dealer.getHand());
-            if(compare > 0){
-                dealerBank.transferTo(playerBank, 3*(getPlayerInput().getTotalAmountBet(i)/2));
+            if (compare > 0) {
+                dealerBank.transferTo(playerBank, 3 * (getPlayerInput().getTotalAmountBet(i) / 2));
                 this.out.println("Transferring winnings from dealer to player");
-            } else if (compare < 0){
+            } else if (compare < 0) {
                 playerBank.transferTo(dealerBank, getPlayerInput().getTotalAmountBet(i));
                 this.out.println("Transferring winnings from player to dealer");
-            } else{
+            } else {
                 this.out.println("Cancelling wager; Equal points.");
             }
             getPlayerInput().setCurrentWager(0, i);
@@ -289,6 +286,7 @@ public class Blackjack {
 
     //endregion
     //region Helper methods
+
     /**
      * Dequeues a card from the deck
      *

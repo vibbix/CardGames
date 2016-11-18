@@ -97,15 +97,13 @@ public class Hand extends Pile {
     public int compareTo(Hand player, Hand dealer) {
         int b1 = handValue(player);
         int b2 = handValue(dealer);
-        if (b1 > 21 && b2 > 21){
+        if (b1 > 21 && b2 > 21) {
             return -1;
-        }
-        else if (b1 > 21 && b2 <= 21) {
+        } else if (b1 > 21 && b2 <= 21) {
             return -1;
-        }
-        else if (b1 > b2) {
+        } else if (b1 > b2) {
             return 1;
-        }else if (b1 == b2) {
+        } else if (b1 == b2) {
             return 0;
         }
         return -1;
@@ -121,6 +119,7 @@ public class Hand extends Pile {
 
     /**
      * Checks if hand is blackjack
+     *
      * @return true if hand is blackjack
      */
     public boolean isBlackjack() {
@@ -134,11 +133,12 @@ public class Hand extends Pile {
 
     /**
      * Checks if hand has busted
+     *
      * @return True if hand has busted
      */
-    public boolean hasBusted(){
+    public boolean hasBusted() {
         int[] values = this.getSoftHandValues();
-        return Arrays.stream(values).allMatch( i -> i > 21);
+        return Arrays.stream(values).allMatch(i -> i > 21);
     }
 
     @Override

@@ -236,6 +236,7 @@ public class Player {
 
     /**
      * Gets if the player has split a hand.
+     *
      * @return True if the player has already split.
      */
     public boolean hasSplit() {
