@@ -10,14 +10,15 @@ public enum CardSuit {
     Hearts('♥'),
     Spades('♠');
     private char symbol;
-    CardSuit(char Symbol){
+
+    CardSuit(char Symbol) {
         this.symbol = Symbol;
     }
 
     /**
      * @return The cards unicode symbol
      */
-    public char getSymbol(){
+    public char getSymbol() {
         return this.symbol;
     }
 }

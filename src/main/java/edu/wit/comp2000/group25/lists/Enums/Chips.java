@@ -1,7 +1,7 @@
 package edu.wit.comp2000.group25.lists.Enums;
 
 /**
- * Created by beznosm on 11/10/2016.
+ * The chips one can play with.
  */
 public enum Chips {
     One(1),
@@ -11,10 +11,12 @@ public enum Chips {
     Hundred(100),
     Thousand(1000);
     private int chipValue;
-    private Chips(int value){
+
+    Chips(int value) {
         this.chipValue = value;
     }
-    public int getChipValue(){
+
+    public int getChipValue() {
         return this.chipValue;
     }
 

@@ -1,7 +1,7 @@
 package edu.wit.comp2000.group25.lists.Enums;
 
 /**
- * Created by beznosm on 11/10/2016.
+ * The available card values
  */
 public enum CardValue {
     Ace(1),
@@ -18,10 +18,12 @@ public enum CardValue {
     Queen(10),
     King(10);
     private int value;
-    CardValue(int value){
+
+    CardValue(int value) {
         this.value = value;
     }
-    public int getValue(){
+
+    public int getValue() {
         return this.value;
     }
 }

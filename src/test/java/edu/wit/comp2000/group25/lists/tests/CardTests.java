@@ -1,3 +1,5 @@
+package edu.wit.comp2000.group25.lists.tests;
+
 import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;
 import edu.wit.comp2000.group25.lists.Enums.CardValue;
@@ -9,17 +11,19 @@ import org.junit.Test;
  */
 public class CardTests {
     @Test
-    public void cardToString(){
+    public void cardToString() {
         Card c = new Card(CardSuit.Diamonds, CardValue.Ace);
         Assert.assertEquals("Card{'♦':'Ace'}", c.toString());
     }
+
     @Test
-    public void getSuit(){
+    public void getSuit() {
         Card c = new Card(CardSuit.Diamonds, CardValue.Ace);
-       Assert.assertEquals(CardSuit.Diamonds, c.getSuit());
+        Assert.assertEquals(CardSuit.Diamonds, c.getSuit());
     }
+
     @Test
-    public void getValue(){
+    public void getValue() {
         Card c = new Card(CardSuit.Diamonds, CardValue.Ace);
         Assert.assertEquals(CardValue.Ace, c.getValue());
     }
@@ -72,6 +76,7 @@ public class CardTests {
         Card c2 = new Card(CardSuit.Hearts, CardValue.Ace);
         Assert.assertEquals(-1, c1.compare(c1, c2));
     }
+
     @Test
     public void compareEqual() {
         Card c1 = new Card(CardSuit.Diamonds, CardValue.Ace);

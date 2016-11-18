@@ -1,6 +1,9 @@
-package edu.wit.comp2000.group25.lists;
+package edu.wit.comp2000.group25.lists.Collections;
+
+import edu.wit.comp2000.group25.lists.Card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -12,25 +15,27 @@ public class Pile {
     /**
      * Creates a new pile of cards
      */
-    public Pile(){
+    public Pile() {
         this.cardCollection = new ArrayList<>();
     }
 
     /**
      * Removes and returns the card on top of the pile
+     *
      * @return The card on top of the pile,
      */
-    public Card dequeueCard(){
-        if(this.cardCollection.size() != 0)
+    public Card dequeueCard() {
+        if (this.cardCollection.size() != 0)
             return this.cardCollection.remove(0);
         throw new ArrayIndexOutOfBoundsException("Ran out of cards to deal.");
     }
 
     /**
      * Adds a card to a pile
+     *
      * @param card Card to add to pile
      */
-    public void enqueueCard(Card card){
+    public void enqueueCard(Card card) {
         if (card == null)
             throw new IllegalArgumentException("Card cannot be null");
         this.cardCollection.add(card);
@@ -38,9 +43,10 @@ public class Pile {
 
     /**
      * Gets the array representation of all the cards in the pile.
+     *
      * @return The array of cards in the pile.
      */
-    public Card[] toArray(){
+    public Card[] toArray() {
         Card[] carray = new Card[this.cardCollection.size()];
         return this.cardCollection.toArray(carray);
     }
@@ -48,19 +54,32 @@ public class Pile {
     /**
      * Shuffles the pile
      */
-    public void shuffle(){
+    public void shuffle() {
         Collections.shuffle(this.cardCollection);
     }
 
-    public void sort(){
+    public void sort() {
         Collections.sort(this.cardCollection);
     }
 
     /**
      * Gets the cards in the pile
+     *
      * @return Number of cards in the pile
      */
-    public int getCardCount(){
+    public int getCardCount() {
         return this.cardCollection.size();
+    }
+
+    /**
+     * Clears the pile
+     */
+    public void clear() {
+        this.cardCollection.clear();
+    }
+
+    @Override
+    public String toString() {
+        return "Pile{" + Arrays.toString(this.toArray()) + "}";
     }
 }
