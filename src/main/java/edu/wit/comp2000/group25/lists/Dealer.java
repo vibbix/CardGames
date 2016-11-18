@@ -15,6 +15,7 @@ public class Dealer {
 
     /**
      * Creates a new blackjack dealer
+     *
      * @param blackjack The current game
      */
     public Dealer(Blackjack blackjack) {
@@ -24,10 +25,12 @@ public class Dealer {
     }
 
     /**
+     * Checks the dealers hand for blackjack.
+     *
      * @return True if the dealers hand is blackjack.
      */
-    protected boolean checkForBlackjack() {
-        return Arrays.asList(this.dealerHand.getSoftHandValues()).contains(21);
+    public boolean hasBlackjack() {
+        return this.dealerHand.isBlackjack();
     }
 
     /**

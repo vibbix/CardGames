@@ -1,3 +1,5 @@
+package edu.wit.comp2000.group25.lists.tests;
+
 import edu.wit.comp2000.group25.lists.Enums.Chips;
 import junit.framework.Assert;
 import org.junit.Test;

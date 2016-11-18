@@ -47,7 +47,7 @@ public class Blackjack {
         this.gs = GameState.GameBegin;
         this.dealer = new Dealer(this);
         this.player = new Player(this);
-        this.dealerBank = (dealerMoney == 0? new DealerBank() : new DealerBank(dealerMoney));
+        this.dealerBank = (dealerMoney == 0 ? new DealerBank() : new DealerBank(dealerMoney));
         this.playerInput = new PlayerInput();
         this.playerBank = new PlayerBank(playerMoney);
         this.matchnum = 0;
@@ -104,7 +104,7 @@ public class Blackjack {
     }
 
     private boolean gsPlayerWantsToStartMatch() {
-        if(this.playerInput.getGotInput()) {
+        if (this.playerInput.getGotInput()) {
             if (this.playerInput.isPlayNextMatch()) {
                 this.gs = GameState.CanStartNewMatch;
             } else {
@@ -116,18 +116,17 @@ public class Blackjack {
     }
 
     private boolean gsCanStartNewMatch() {
-        if(this.playerBank.getMoney() < 1)
-        {
+        if (this.playerBank.getMoney() < 1) {
             this.out.println("Player is bankrupt. Game over.");
             this.gs = GameState.GameEnd;
             return true;
         }
-        if(!this.dealerBank.isInfinite() &&  this.dealerBank.getMoney() < 1){
+        if (!this.dealerBank.isInfinite() && this.dealerBank.getMoney() < 1) {
             this.out.println("Dealer is bankrupt. Game over.");
             this.gs = GameState.GameEnd;
             return true;
         }
-        if(this.dealer.getCards().length < 5){
+        if (this.dealer.getCards().length < 5) {
             this.out.println("Dealer ran out of cards. Game Over.");
             this.gs = GameState.GameEnd;
             return true;
@@ -146,8 +145,8 @@ public class Blackjack {
     }
 
     private boolean gsPlayerPlaceWagers() {
-        if(this.playerInput.getGotInput()){
-            if(this.playerInput.getCurrentWager(0) > 1){
+        if (this.playerInput.getGotInput()) {
+            if (this.playerInput.getTotalAmountBet(0) > 1) {
                 this.gs = GameState.DealerPlacesPlayerCards;
                 return true;
             }
@@ -179,7 +178,7 @@ public class Blackjack {
     }
 
     private boolean gsPlayerPlaceInsurance() {
-        if(this.playerInput.getCurrentInsurance() > -1){
+        if (this.playerInput.getCurrentInsurance() > -1) {
             this.gs = GameState.DealerCheckInsurance;
             return true;
         }
@@ -187,7 +186,7 @@ public class Blackjack {
     }
 
     private boolean gsDealerCheckInsurance() {
-        if(this.dealer.checkForBlackjack()){
+        if (this.dealer.hasBlackjack()) {
             this.gs = GameState.DealerDistributeWinnings;
             return true;
         }
@@ -196,8 +195,7 @@ public class Blackjack {
     }
 
     private boolean gsPlayerTurn() {
-        if(this.playerInput.isPlayerTurnDone())
-        {
+        if (this.playerInput.isPlayerTurnDone()) {
             this.gs = GameState.DealerFlipCard;
             return true;
         }
@@ -206,9 +204,9 @@ public class Blackjack {
 
     private boolean gsDealerFlipCard() {
         this.dealer.revealCards();
-        if(this.dealer.mustHit()){
+        if (this.dealer.mustHit()) {
             this.gs = GameState.DealerHit;
-        } else{
+        } else {
             this.gs = GameState.DealerDistributeWinnings;
         }
         return true;
@@ -217,7 +215,7 @@ public class Blackjack {
 
     private boolean gsDealerHit() {
         this.dealer.hitDeck();
-        if(this.dealer.mustHit()){
+        if (this.dealer.mustHit()) {
             return true;
         }
         this.gs = GameState.DealerDistributeWinnings;
@@ -226,8 +224,8 @@ public class Blackjack {
 
     private boolean gsDealerDistributeWinnings() {
         //check insurance
-        if(this.playerInput.getCurrentInsurance() > -1){
-            if(this.dealer.checkForBlackjack()){
+        if (this.playerInput.getCurrentInsurance() > -1) {
+            if (this.dealer.hasBlackjack()) {
                 this.dealerBank.transferTo(this.playerBank, 2 * this.playerInput.getCurrentInsurance());
             } else {
                 this.playerBank.transferTo(this.dealerBank, this.playerInput.getCurrentInsurance());
@@ -256,9 +254,10 @@ public class Blackjack {
 
     /**
      * Dequeues a card from the deck
+     *
      * @return A card
      */
-    public Card dequeueCard(){
+    public Card dequeueCard() {
         return this.deck.dequeueCard();
     }
 
@@ -306,7 +305,7 @@ public class Blackjack {
         return this.dealerBank;
     }
 
-    public PlayerInput getPlayerInput(){
+    public PlayerInput getPlayerInput() {
         return this.playerInput;
     }
 }

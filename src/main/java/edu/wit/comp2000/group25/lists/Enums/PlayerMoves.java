@@ -8,6 +8,5 @@ public enum PlayerMoves {
     Hit,
     Double,
     Split,
-    Stand,
-    Insurance
+    Stand
 }

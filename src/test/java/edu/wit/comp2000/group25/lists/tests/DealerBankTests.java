@@ -1,3 +1,5 @@
+package edu.wit.comp2000.group25.lists.tests;
+
 import edu.wit.comp2000.group25.lists.DealerBank;
 import edu.wit.comp2000.group25.lists.PlayerBank;
 import org.junit.Assert;
@@ -84,13 +86,15 @@ public class DealerBankTests {
         Assert.assertEquals(0, db1.getMoney());
         Assert.assertEquals(100, db2.getMoney());
     }
+
     @Test
-    public void isInfinite(){
+    public void isInfinite() {
         DealerBank db = new DealerBank();
         Assert.assertEquals(true, db.isInfinite());
     }
+
     @Test
-    public void isNotInfinite(){
+    public void isNotInfinite() {
         DealerBank db = new DealerBank(0);
         Assert.assertEquals(false, db.isInfinite());
     }

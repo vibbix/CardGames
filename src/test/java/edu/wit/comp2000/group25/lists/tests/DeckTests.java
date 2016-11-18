@@ -1,3 +1,5 @@
+package edu.wit.comp2000.group25.lists.tests;
+
 import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Collections.Deck;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;

@@ -1,3 +1,5 @@
+package edu.wit.comp2000.group25.lists.tests;
+
 import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Collections.Pile;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;
@@ -7,6 +9,7 @@ import org.junit.Test;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -79,5 +82,22 @@ public class PileTests {
         p.shuffle();
         p.sort();
         Assert.assertArrayEquals(cexpect, p.toArray());
+    }
+
+    @Test
+    public void clear() {
+        Pile p = new Pile();
+        Card c = new Card(CardSuit.Diamonds, CardValue.Ten);
+        p.enqueueCard(c);
+        p.clear();
+        assertEquals(0, p.getCardCount());
+    }
+
+    @Test
+    public void toStringTest() {
+        Pile p1 = new Pile();
+        p1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        p1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Assert.assertEquals("Pile{[Card{'♣':'Ten'}, Card{'♣':'Ace'}]}", p1.toString());
     }
 }

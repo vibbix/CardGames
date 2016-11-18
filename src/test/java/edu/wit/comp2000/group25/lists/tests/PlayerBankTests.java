@@ -1,3 +1,5 @@
+package edu.wit.comp2000.group25.lists.tests;
+
 import edu.wit.comp2000.group25.lists.PlayerBank;
 import org.junit.Assert;
 import org.junit.Test;

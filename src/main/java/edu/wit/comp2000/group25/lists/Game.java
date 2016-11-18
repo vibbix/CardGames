@@ -1,9 +1,8 @@
 package edu.wit.comp2000.group25.lists;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -18,6 +17,8 @@ public class Game {
     private PrintStream out;
 
     /**
+     * Creates a new instance of the game class
+     *
      * @param ps          PrintStream to output to(i.e. System.out)
      * @param in          InputStream to use (i.e. System.in)
      * @param playDecks   Number of decks to play with (Min. 1)
@@ -71,13 +72,16 @@ public class Game {
                         }
                         break;
                     case PlayersPlaceWagers:
-                        this.playerPlaceWagers();
+                        int wager = this.playerPlaceWagers();
+                        this.blackjack.getPlayerInput().setCurrentWager(wager, 0);
                         break;
                     case PlayersPlaceInsurance:
-                        this.playersPlaceInsurance();
+                        int insurance = this.playersPlaceInsurance();
+                        this.blackjack.getPlayerInput().setCurrentInsurance(insurance);
                         break;
                     case PlayerTurn:
                         this.playerTurn();
+                        this.blackjack.getPlayerInput().setPlayerTurnDone(true);
                         break;
                     case GameEnd:
                         this.gameEnd();
@@ -90,23 +94,61 @@ public class Game {
     }
 
     private int playerPlaceWagers() {
-        throw new NotImplementedException();
+        int wager = 0;
+        while (true) {
+            wager = getInt("Amount to wager for this round: ", 1);
+            if (wager > this.blackjack.getPlayerBank().getMoney()) {
+                this.out.println("You only have $" + this.blackjack.getPlayerBank().getMoney());
+                continue;
+            }
+            break;
+        }
+        return wager;
     }
 
     private boolean playerWantsToStartMatch() {
-        throw new NotImplementedException();
+        while (true) {
+            this.out.print("Do you want to start the match? (Y/N) ");
+            String answer = this.scanner.next().toLowerCase().trim();
+            switch (answer) {
+                case "y":
+                    return true;
+                case "n":
+                    return false;
+                default:
+                    this.out.println("Not a valid answer, try again.");
+                    break;
+            }
+        }
     }
 
     private void playerTurn() {
-        throw new NotImplementedException();
+        while (true) {
+            Player p = this.blackjack.getPlayer();
+            this.out.println("Dealer hand: " +
+                    Arrays.toString(this.blackjack.getDealer().getCards()));
+            this.out.println("Player hand: " +
+                    Arrays.toString(this.blackjack.getPlayer().getHands()));
+            this.out.println("Available Moves: " + Arrays.toString(p.getAvailableMoves(0)));
+            break;
+        }
     }
 
     private int playersPlaceInsurance() {
-        throw new NotImplementedException();
+        int insurance = 0;
+        while (true) {
+            insurance = getInt("Amount to set insurance sidebet: ", 0);
+            if (insurance > this.blackjack.getPlayerBank().getMoney()) {
+                this.out.println("You only have $" + this.blackjack.getPlayerBank().getMoney());
+                continue;
+            }
+            break;
+        }
+        return insurance;
     }
 
     private void gameEnd() {
-        throw new NotImplementedException();
+        this.out.println("Thank you for playing!");
     }
 
     /**
@@ -131,4 +173,5 @@ public class Game {
             }
         }
     }
+
 }

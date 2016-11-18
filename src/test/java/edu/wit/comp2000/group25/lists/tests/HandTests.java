@@ -1,3 +1,5 @@
+package edu.wit.comp2000.group25.lists.tests;
+
 import edu.wit.comp2000.group25.lists.Card;
 import edu.wit.comp2000.group25.lists.Collections.Hand;
 import edu.wit.comp2000.group25.lists.Enums.CardSuit;
@@ -97,6 +99,59 @@ public class HandTests {
         h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
         h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
         Assert.assertEquals(1, h1.compare(h2));
+    }
+
+    @Test
+    public void toStringTest() {
+        Hand h1 = new Hand();
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Assert.assertEquals("Hand{[Card{'♣':'Ten'}, Card{'♣':'Ace'}]}", h1.toString());
+    }
+
+    @Test
+    public void notEqualToObject() {
+        Hand h = new Hand();
+        h.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        h.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Assert.assertEquals(false, h.equals("hello"));
+    }
+
+    @Test
+    public void notEqualToDifferentLength() {
+        Hand h1 = new Hand();
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Hand h2 = new Hand();
+        h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        Assert.assertEquals(false, h1.equals(h2));
+    }
+
+    @Test
+    public void equalTo() {
+        Hand h1 = new Hand();
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Hand h2 = new Hand();
+        h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ten));
+        h2.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Assert.assertEquals(true, h1.equals(h2));
+    }
+
+    @Test
+    public void canSplit() {
+        Hand h1 = new Hand();
+        h1.enqueueCard(new Card(CardSuit.Hearts, CardValue.Ace));
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Ace));
+        Assert.assertEquals(true, h1.canSplit());
+    }
+
+    @Test
+    public void cannotSplit() {
+        Hand h1 = new Hand();
+        h1.enqueueCard(new Card(CardSuit.Hearts, CardValue.Ace));
+        h1.enqueueCard(new Card(CardSuit.Clubs, CardValue.Eight));
+        Assert.assertEquals(false, h1.canSplit());
     }
 
 }

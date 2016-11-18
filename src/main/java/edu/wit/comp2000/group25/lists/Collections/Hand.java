@@ -9,12 +9,14 @@ import java.util.Arrays;
  * The hand of cards a player holds
  */
 public class Hand extends Pile {
+    private boolean hasBeenSplit;
 
     /**
      * Creates a new hand for a player
      */
     public Hand() {
         super();
+        this.hasBeenSplit = false;
     }
 
     /**
@@ -71,6 +73,21 @@ public class Hand extends Pile {
     }
 
     /**
+     * Checks if the hand can be split
+     *
+     * @return true if the hand can be split
+     */
+    public boolean canSplit() {
+        Card[] c = this.toArray();
+        if (c.length == 2) {
+            if (c[0].getValue() == c[1].getValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Checks which hand is of higher value, but not black jack
      *
      * @param h1 The first hand to compare
@@ -95,10 +112,43 @@ public class Hand extends Pile {
         return compareTo(this, h);
     }
 
-
-    @Override
-    public String toString(){
-        return "Hand{"+ Arrays.toString(this.toArray())+"}";
+    /**
+     * @return
+     */
+    public boolean isBlackjack() {
+        return Arrays.stream(this.getSoftHandValues()).anyMatch(i -> i == 21);
     }
 
+    @Override
+    public String toString() {
+        return "Hand{" + Arrays.toString(this.toArray()) + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Hand) {
+            if (((Hand) o).getCardCount() == this.getCardCount()) {
+                return 0 == this.compare((Hand) o);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns if the hand has been split
+     *
+     * @return If the hand already has been split
+     */
+    public boolean hasBeenSplit() {
+        return hasBeenSplit;
+    }
+
+    /**
+     * Sets if the hand has been split
+     *
+     * @param hasBeenSplit Value to set hasBeenSplit to
+     */
+    public void setHasBeenSplit(boolean hasBeenSplit) {
+        this.hasBeenSplit = hasBeenSplit;
+    }
 }
